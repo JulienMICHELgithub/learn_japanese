@@ -29,7 +29,6 @@ int play(int line, char **tab)
     printf("Did you find the good one ? [y/n] :: ");
     scanf("%9s", answer);
     getchar();
-
     if (strcmp("y", answer) == 0) {
         return 1;
     } else {
