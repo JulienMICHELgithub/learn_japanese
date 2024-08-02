@@ -13,11 +13,11 @@ static int rand_int(int line)
 }
 
 
-void play(int line, char **tab)
+int play(int line, char **tab)
 {
     int which_one = rand_int(line);
     char **voc = my_str_to_word_array(tab[which_one], ":");
-    char *letter = 0;
+    char answer[10];
 
     printf("\033[1;34mYou have to write : --\033[0m");
     printf("\033[1;31m%s\033[0m", voc[0]);
@@ -26,7 +26,15 @@ void play(int line, char **tab)
     while (getchar() != '\n');
     printf("\033[1;32mThe correct answer was : \033[0m");
     printf("\033[1;34m%s\033[0m\n", voc[1]);
+    printf("Did you find the good one ? [y/n] :: ");
+    scanf("%9s", answer);
+    getchar();
 
+    if (strcmp("y", answer) == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 void game(char *file)
@@ -34,14 +42,19 @@ void game(char *file)
     int line = 0;
     int i = 0;
     char **tab = 0;
+    int points = 0;
+    int history = 0;
 
     srand(time(0));
     tab = my_str_to_word_array(file,"\n");
     while (tab[line])
         line++;
-    for (int j = 0; j <= 10; j++) {
-        play(line, tab);
+    for (int j = 0; j < 10; j++) {
+        points = play(line, tab);
+        history += points;
+        printf("\n");
     }
+    printf("Score : %d\n", history);
 }
 
 char *open_file(const char *file_path)
